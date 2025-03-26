@@ -1,0 +1,9 @@
+name: Create a Basic GitHub Actions Workflow
+run-name: ${{ github.actor }} is testing out GitHub Actions 🚀
+on: [push]
+jobs:
+  Hello-GitHub-Actions:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "🎉Hello, GitHub Actions!"
+      
