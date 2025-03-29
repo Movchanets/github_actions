@@ -41,11 +41,11 @@ jobs:
 
       - name: Update README with build status badge
         run: |
-          # Оновлюємо README.md
-          sed -i 's|!\\[Build Status\\](.*)|![Build Status](https://github.com/<owner>/<repo>/actions/workflows/unit-tests-with-coverage.yaml/badge.svg)|' README.md
+          set -e  # Exit on error
+          echo "Updating README.md with build status badge..."
+          sed -i 's|!\\[Build Status\\](.*)|![Build Status](https://github.com/${{ github.repository }}/actions/workflows/unit-tests-with-coverage.yaml/badge.svg)|' README.md
           git add README.md
-          git commit -m "Update build status badge"
+          git commit -m "Update build status badge" || echo "No changes to commit"
           git push
-
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
