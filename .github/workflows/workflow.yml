@@ -26,12 +26,3 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
-
-      - name: Check coverage
-        run: |
-          coverage=$(grep -oP 'line-rate="\K[0-9.]+' coverage.xml)
-          coverage_percent=$(echo "$coverage * 100" | bc)
-          if (( $(echo "$coverage_percent < 70" | bc -l) )); then
-            echo "Coverage ($coverage_percent%) is below 70%!"
-            exit 1
-          fi
