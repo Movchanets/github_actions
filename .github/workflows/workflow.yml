@@ -22,7 +22,7 @@ jobs:
         run: pytest --cov=myapp --cov-report=xml
 
       - name: Upload coverage report
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@4
         with:
           name: coverage-report
           path: coverage.xml
