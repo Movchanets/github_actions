@@ -40,7 +40,8 @@ jobs:
           git config user.email "github-actions@github.com"
       - name: Checkout branch
         run: |
-          git checkout ${{ github.head_ref }}
+          git fetch --all
+          git checkout ${{ github.head_ref }} || git checkout main
       - name: Update README with build status badge
         run: |
           set -e  # Exit on error
