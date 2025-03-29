@@ -1,6 +1,6 @@
 name: Unit Tests with Coverage
 
-on: [push, pull_request]
+on: [pull_request]
 
 jobs:
   test:
@@ -26,54 +26,10 @@ jobs:
         with:
           name: coverage-report
           path: coverage.xml
+
   build:
     runs-on: ubuntu-latest
-    needs: test
+    needs: test # This ensures the build job runs only if the test job is successful
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Build project
-        run: echo "Building the project..."
-
-      - name: Generate build badge
-        uses: gesquive/badge-action@v1
-        with:
-          label: Build
-          message: Success
-          color: brightgreen
-          path: build-badge.svg
-
-      - name: Upload build badge
-        uses: actions/upload-artifact@v4
-        with:
-          name: build-badge
-          path: build-badge.svg
-
-      - name: Update README with build status badge
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          README_FILE=README.md
-          BADGE_LINE="![Build Status](./build-badge.svg)"
-          if grep -q "$BADGE_LINE" "$README_FILE"; then
-            echo "Badge already exists in README.md"
-          else
-            echo -e "$BADGE_LINE
-$(cat $README_FILE)" > $README_FILE
-            git config --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            git add $README_FILE
-            git commit -m "Update README with build status badge"
-            git push origin ${{ github.ref }}
-          fig --global user.name "github-actions"
-            git config --global user.email "github-actions@github.com"
-            git add $README_FILE
-            git commit -m "Update README with build status badge"
-            git push origin ${{ github.ref }}
-          fi
-        uses: actions/upload-artifact@v4
-        with:
-          name: coverage-report
-          path: coverage.xml
+      - run: echo "test passed, build job running"
