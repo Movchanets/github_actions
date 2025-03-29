@@ -46,7 +46,7 @@ jobs:
       - name: Update README.md with build status badge
         run: |
           set -e  # Exit on error
-          echo "Updating README.md with build status badge..."
+          echo "Updating README.md with build status badge... https://github.com/Movchanets/github_actions/actions/workflows/workflow.yml/badge.svg"
           echo "![Workflow Badge](https://github.com/Movchanets/github_actions/actions/workflows/workflow.yml/badge.svg)" > README.md
           git add README.md
           git commit -m "Update build status badge" || echo "No changes to commit"
