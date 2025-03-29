@@ -42,21 +42,12 @@ jobs:
         run: |
           git fetch --all
           git checkout ${{ github.head_ref }} || git checkout main
-      - name: Ensure README.md exists and is not empty
-        run: |
-          if [ ! -e README.md ] || [ ! -s README.md ]; then
-            echo "# Project Title\n\n![Build Status](https://github.com/Movchanets/github_actions/actions/workflows/workflow.yaml/badge.svg)\n\n## Description\n\nA brief description of the project." > README.md
-            git add README.md
-            git commit -m "Initialize README.md with build status badge"
-            git push
-          else
-            echo "README.md already exists and is not empty."
-          fi
+
       - name: Update README.md with build status badge
         run: |
           set -e  # Exit on error
           echo "Updating README.md with build status badge..."
-          echo "# Project Title\n\n![Build Status](https://github.com/Movchanets/github_actions/actions/workflows/workflow.yaml/badge.svg)\n\n## Description\n\nA brief description of the project." > README.md
+          echo "![Workflow Badge](https://github.com/Movchanets/github_actions/actions/workflows/workflow.yml/badge.svg)" > README.md
           git add README.md
           git commit -m "Update build status badge" || echo "No changes to commit"
           git push
