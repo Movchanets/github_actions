@@ -29,7 +29,23 @@ jobs:
 
   build:
     runs-on: ubuntu-latest
-    needs: test # This ensures the build job runs only if the test job is successful
-
+    needs: test
     steps:
-      - run: echo "test passed, build job running"
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config user.name "github-actions"
+          git config user.email "github-actions@github.com"
+
+      - name: Update README with build status badge
+        run: |
+          # Оновлюємо README.md
+          sed -i 's|!\\[Build Status\\](.*)|![Build Status](https://github.com/<owner>/<repo>/actions/workflows/unit-tests-with-coverage.yaml/badge.svg)|' README.md
+          git add README.md
+          git commit -m "Update build status badge"
+          git push
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
